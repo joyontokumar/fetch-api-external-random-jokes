@@ -1,4 +1,4 @@
-// single json data
+// get jokes fetch api json data
 document.querySelector('#GetJokes').addEventListener('click', loadjsondata);
 
 function loadjsondata(e) {
