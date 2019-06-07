@@ -1,49 +1,28 @@
 // single json data
-document.getElementById('btn1').addEventListener('click', loadjsondata1);
+document.querySelector('#GetJokes').addEventListener('click', loadjsondata);
 
-function loadjsondata1() {
-    fetch('myJson.json')
-        .then(responseData => {
-            return responseData.json();
-        })
-        .then(data => {
-            const output = `<ul class="list-group mt-5"> 
-                <li class="list-group-item"> id : ${data.id}</li>
-                <li class="list-group-item"> name : ${data.name}</li>
-                <li class="list-group-item"> city : ${data.city}</li>
-                <li class="list-group-item"> city : ${data.phoneNumber}</li>
-                <li class="list-group-item"> city : ${data.gender}</li>
-            </ul>`;
-            document.getElementById('singlejson').innerHTML = output;
-        })
-        .catch(err => {
-            console.log(err);
-        })
-}
+function loadjsondata(e) {
+    const mydata = document.querySelector('input[type="number"]').value;
 
-// multiple json data
-
-document.getElementById('btn2').addEventListener('click', loadjsondata2);
-
-function loadjsondata2() {
-    fetch('myJson2.json')
+    fetch(`http://api.icndb.com/jokes/${mydata}`)
         .then(responseData => {
             return responseData.json();
         })
         .then(data => {
             let output = '';
-            data.forEach(function (multileItem) {
+            console.log(data);
+            if (data.type === 'success') {
                 output += `<ul class="list-group mt-5"> 
-                <li class="list-group-item"> id : ${multileItem.id}</li>
-                <li class="list-group-item"> name : ${multileItem.name}</li>
-                <li class="list-group-item"> city : ${multileItem.city}</li>
-                <li class="list-group-item"> city : ${multileItem.phoneNumber}</li>
-                <li class="list-group-item"> city : ${multileItem.gender}</li>
-            </ul>`;
-            })
-            document.getElementById('multiplejson').innerHTML = output;
+                         <li class="list-group-item">${data.value.joke}</li>
+                    </ul>`;
+
+            } else {
+                output += '';
+            }
+            document.getElementById('multiplejson').innerHTML += output;
         })
         .catch(err => {
             console.log(err);
         })
+    e.preventDefault();
 }
